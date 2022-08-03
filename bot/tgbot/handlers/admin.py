@@ -14,6 +14,6 @@ admin_router.message.filter(AdminFilter())
 @admin_router.message(commands=["start"], state="*")
 async def admin_start(message: Message):
     await message.answer(
-        "Выберите число:",
+        f"Привет {message.from_user.first_name}",
         reply_markup=builder.as_markup(resize_keyboard=True),
         )

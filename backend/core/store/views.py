@@ -13,7 +13,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-    # @action(methods=['get'], detail=True)
-    # def category(self, request, pk=None):
-    #     cats = Category.objects.get(pk=pk)
-    #     return Response({'cats': cats.name})
+    @action(methods=['get'], detail=False)
+    def category(self, request, pk=None):
+        cats = Category.objects.all()
+        return Response({c.id : c.name for c in cats})
