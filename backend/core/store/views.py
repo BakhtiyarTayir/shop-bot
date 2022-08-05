@@ -24,11 +24,11 @@ class ProductByCatViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
     def get_queryset(self):
-        cat = self.kwargs.get("pk")
+        pk = self.kwargs.get("pk")
         print(self.kwargs)
-        if not cat:
+        if not pk:
             return Product.objects.all()
-        return Product.objects.filter(category=cat)
+        return Product.objects.filter(category=pk)
 
     
     

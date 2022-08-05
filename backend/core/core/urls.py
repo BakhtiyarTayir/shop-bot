@@ -21,12 +21,13 @@ from store.views import *
 from rest_framework import routers
 
 router = routers.SimpleRouter()
+router2 = routers.SimpleRouter()
 router.register(r'product', ProductViewSet)
 router.register(r'product_cat', ProductByCatViewSet, basename='cat')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    path('api/v1/', include(router.urls))
+    path('api/v1/', include(router2.urls))
 ]
  
