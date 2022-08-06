@@ -19,17 +19,10 @@ class ProductViewSet(viewsets.ModelViewSet):
         cats = Category.objects.all()
         return Response({c.id : c.name for c in cats})
 
-class ProductByCatViewSet(viewsets.ModelViewSet):
-    # queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
-    def get_queryset(self):
-        pk = self.kwargs.get("pk")
-        print(self.kwargs)
-        if not pk:
-            return Product.objects.all()
-        return Product.objects.filter(category=pk)
-
-    
-    
-
+class ProductListByCatView(APIView):
+    """Вывод списка товаров по категории"""
+    def get(self, request, pk=None):
+        products = Product.objects.filter(category=pk)
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
