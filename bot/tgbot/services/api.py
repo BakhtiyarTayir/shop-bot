@@ -13,5 +13,5 @@ async def get_cats():
 
 async def get_products(cat_id: int):
     async with aiohttp.ClientSession() as session:
-        async with session.get(URL_CAT + cat_id) as response:
+        async with session.get(URL_CAT + str(cat_id)) as response:
             return await response.json()

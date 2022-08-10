@@ -8,7 +8,7 @@ from tgbot.config import load_config
 from tgbot.handlers.admin import admin_router
 from tgbot.handlers.echo import echo_router
 from tgbot.handlers.user import user_router
-from tgbot.handlers.menu import cats_menu_router
+from tgbot.handlers.menu import cats_menu_router, products_menu
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.services import broadcaster
 
@@ -40,6 +40,7 @@ async def main():
         admin_router,
         user_router,
         cats_menu_router,
+        products_menu,
     ]:
         dp.include_router(router)
 

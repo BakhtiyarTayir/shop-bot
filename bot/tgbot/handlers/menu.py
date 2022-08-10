@@ -1,6 +1,7 @@
 from aiogram import Router
 from aiogram.types import Message, CallbackQuery
-from tgbot.keyboards.inline import menu_cats, products_menu
+from tgbot.keyboards.inline import menu_cats, products_menu_ink
+from tgbot.keyboards.category_callback_data import CategoryCallbackData
 
 
 cats_menu_router = Router()
@@ -16,10 +17,14 @@ async def get_categories(message: Message):
         reply_markup=menu.as_markup()
         )
 
-@products_menu.callback_query_handler(text="1")
-async def get_products(callback: CallbackQuery):
-    menu = await products_menu(callback.data)
-    await callback.answer(
-        'Продукты',
+@products_menu.callback_query_handler()
+async def get_products(callback_data: CategoryCallbackData):
+    cat_id = callback_data.cat_id
+    print(cat_id)
+    menu = await products_menu_ink(cat_id)
+    await callback_data.answer(
+        'Товары',
         reply_markup=menu.as_markup()
-    )
+        )
+
+
