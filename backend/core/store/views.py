@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, ProductsByCategorySerializer
 
 from .models import Category, Product
 
@@ -24,5 +24,6 @@ class ProductListByCatView(APIView):
     """Вывод списка товаров по категории"""
     def get(self, request, pk=None):
         products = Product.objects.filter(category=pk)
-        serializer = ProductSerializer(products, many=True)
+        serializer = ProductsByCategorySerializer(products, many=True)
+        print(serializer.data)
         return Response(serializer.data)

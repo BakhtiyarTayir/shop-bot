@@ -19,6 +19,9 @@ async def products_menu_ink(cat_id):
     menu = InlineKeyboardBuilder()
     menu.adjust(1)
     products = await get_products(cat_id)
-    for name, id in products.items():
-        menu.add(types.InlineKeyboardButton(text=name, callback_data=id))
+    for product in products:
+        for title, name in product.items():
+            print(title)
+            menu.add(types.InlineKeyboardButton(text=name, callback_data="title"))
+    menu.adjust(2)
     return menu

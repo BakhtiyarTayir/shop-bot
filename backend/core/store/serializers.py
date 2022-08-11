@@ -11,3 +11,8 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ("title", "category")
 
+class ProductsByCategorySerializer(serializers.ModelSerializer):
+    title = serializers.CharField()
+    class Meta:
+        model = Product
+        fields = ("title",)

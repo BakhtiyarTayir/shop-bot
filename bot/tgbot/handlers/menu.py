@@ -17,12 +17,12 @@ async def get_categories(message: Message):
         reply_markup=menu.as_markup()
         )
 
-@products_menu.callback_query_handler()
-async def get_products(callback_data: CategoryCallbackData):
+@products_menu.callback_query_handler(CategoryCallbackData.filter())
+async def get_products(callback: CallbackQuery, callback_data: CategoryCallbackData):
     cat_id = callback_data.cat_id
     print(cat_id)
     menu = await products_menu_ink(cat_id)
-    await callback_data.answer(
+    await callback.message.edit_text(
         'Товары',
         reply_markup=menu.as_markup()
         )
