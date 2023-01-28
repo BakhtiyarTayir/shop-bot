@@ -27,3 +27,7 @@ class ProductListByCatView(APIView):
         serializer = ProductsByCategorySerializer(products, many=True)
         print(serializer.data)
         return Response(serializer.data)
+
+
+class SingleProductViewSet(viewsets.ModelViewSet):
+    pass

@@ -2,6 +2,8 @@ from email.policy import default
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 class ProductManager(models.Manager):
@@ -9,17 +11,31 @@ class ProductManager(models.Manager):
         return super(ProductManager, self).get_queryset().filter(in_active=True)
 
 class Category(models.Model):
-    name = models.CharField(max_length=255, db_index=True)
-    slug = models.SlugField(max_length=255, unique=True)
-
-    class Meta:
-        verbose_name_plural = 'categories'
-
-    def get_absolute_url(self):
-        return reverse('store:category_list', args=[self.slug])
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='category_images', blank=True)
+    thumbnail = ImageSpecField(source='image',
+                               processors=[ResizeToFill(100, 50)],
+                               format='JPEG',
+                               options={'quality': 60})
 
     def __str__(self):
         return self.name
+
+# class Category(models.Model):
+#     name = models.CharField(max_length=255, db_index=True)
+#     slug = models.SlugField(max_length=255, unique=True)
+#
+#     class Meta:
+#         verbose_name_plural = 'categories'
+#
+#     def get_absolute_url(self):
+#         return reverse('store:category_list', args=[self.slug])
+#
+#     def __str__(self):
+#         return self.name
 
 class Product(models.Model):
     category = models.ForeignKey(Category, 
